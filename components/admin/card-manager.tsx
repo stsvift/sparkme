@@ -13,7 +13,7 @@ import type { Card as CardType, Theme } from "@/lib/types"
 import { getCards, createCard, updateCard, deleteCard } from '@/app/lib/actions/cards'
 import { getThemes } from "@/app/lib/supabase/themes"
 import { Pencil, Plus, Trash2 } from "lucide-react"
-import { useMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export function CardManager() {
   const [cards, setCards] = useState<CardType[]>([])
@@ -25,7 +25,7 @@ export function CardManager() {
   const [hint, setHint] = useState("")
   const [themeId, setThemeId] = useState("")
   const { toast } = useToast()
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     loadData()

@@ -162,6 +162,15 @@
   text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
 }
 
+/* Apple Emoji Style */
+.emoji-style {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", "Noto Color Emoji Compat", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 /* Responsive utils */
 .container-responsive {
   width: 100%;

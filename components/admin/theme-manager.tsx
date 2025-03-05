@@ -242,7 +242,7 @@ export function ThemeManager() {
         {themes.map((theme) => (
           <Card key={theme.id} className="overflow-hidden">
             <div className={`${theme.gradient_class || "gradient-1"} p-4 md:p-6`}>
-              <div className="text-3xl md:text-4xl mb-2">{theme.emoji}</div>
+              <div className="text-3xl md:text-4xl mb-2 emoji-style">{theme.emoji}</div>
               <h3 className="font-bold text-base md:text-lg text-white">{theme.name}</h3>
               {theme.description && (
                 <p className="text-xs md:text-sm text-white/80 mt-1">{theme.description}</p>

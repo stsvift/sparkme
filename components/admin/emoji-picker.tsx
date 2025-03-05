@@ -46,60 +46,70 @@ export function EmojiPicker({ selectedEmoji, onEmojiSelect }: EmojiPickerProps) 
   }
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className="w-full justify-start text-left font-normal">
-          <span className="mr-2 text-2xl">{selectedEmoji}</span>
-          <span>Выберите эмодзи</span>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="space-y-4">
-          <Input
-            placeholder="Поиск эмодзи..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="mb-2"
-          />
+    <div className="space-y-2">
+      <div className="flex items-center gap-2 p-2 border rounded-md">
+        <span className="text-2xl emoji-style">{selectedEmoji}</span>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full justify-start text-left font-normal">
+              <span className="mr-2 text-2xl">{selectedEmoji}</span>
+              <span>Выберите эмодзи</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="space-y-4">
+              <Input
+                placeholder="Поиск эмодзи..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="mb-2"
+              />
 
-          {!searchTerm && (
-            <div className="flex flex-wrap gap-2 mb-2">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={activeCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setActiveCategory(category)}
-                  className="text-xs"
-                >
-                  {categoryNames[category]}
-                </Button>
-              ))}
+              {!searchTerm && (
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={activeCategory === category ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setActiveCategory(category)}
+                      className="text-xs"
+                    >
+                      {categoryNames[category]}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              <div className="grid grid-cols-8 gap-2">
+                {filteredEmojis.map((emoji, index) => (
+                  <Button
+                    key={`${emoji}-${index}`}
+                    variant="ghost"
+                    className="h-8 w-8 p-0"
+                    onClick={() => {
+                      onEmojiSelect(emoji)
+                      setSearchTerm("")
+                    }}
+                  >
+                    <span className="text-lg">{emoji}</span>
+                  </Button>
+                ))}
+              </div>
+
+              {filteredEmojis.length === 0 && (
+                <p className="text-center text-sm text-muted-foreground">Эмодзи не найдены</p>
+              )}
             </div>
-          )}
-
-          <div className="grid grid-cols-8 gap-2">
-            {filteredEmojis.map((emoji, index) => (
-              <Button
-                key={`${emoji}-${index}`}
-                variant="ghost"
-                className="h-8 w-8 p-0"
-                onClick={() => {
-                  onEmojiSelect(emoji)
-                  setSearchTerm("")
-                }}
-              >
-                <span className="text-lg">{emoji}</span>
-              </Button>
-            ))}
-          </div>
-
-          {filteredEmojis.length === 0 && (
-            <p className="text-center text-sm text-muted-foreground">Эмодзи не найдены</p>
-          )}
+          </PopoverContent>
+        </Popover>
+      </div>
+      {isOpen && (
+        <div className="emoji-style">
+          {/* ...existing picker content... */}
         </div>
-      </PopoverContent>
-    </Popover>
+      )}
+    </div>
   )
 }
 
