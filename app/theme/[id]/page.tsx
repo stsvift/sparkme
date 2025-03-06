@@ -1,6 +1,6 @@
 import { SingleCardView } from "@/components/single-card-view"
 import { PageHeader } from "@/components/page-header"
-import { getTheme } from "@/app/lib/supabase/themes"
+import { getTheme } from "@/app/lib/actions/themes"
 import { notFound } from "next/navigation"
 
 export default async function ThemePage({ params }: { params: { id: string } }) {
