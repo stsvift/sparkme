@@ -1,8 +1,13 @@
 import { getBaseUrl } from '@/lib/utils'
 import type { Theme } from '@/lib/types'
 
+function getApiUrl(path: string) {
+  const baseUrl = getBaseUrl();
+  return baseUrl ? new URL(path, baseUrl).toString() : path;
+}
+
 export async function getThemes(): Promise<Theme[]> {
-  const res = await fetch(`${getBaseUrl()}/api/admin/themes`, {
+  const res = await fetch(getApiUrl('/api/admin/themes'), {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -15,7 +20,7 @@ export async function getThemes(): Promise<Theme[]> {
 }
 
 export async function createTheme(themeData: Omit<Theme, 'id'>): Promise<Theme> {
-  const res = await fetch(`${getBaseUrl()}/api/admin/themes`, {
+  const res = await fetch(getApiUrl('/api/admin/themes'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +36,7 @@ export async function createTheme(themeData: Omit<Theme, 'id'>): Promise<Theme> 
 }
 
 export async function updateTheme(id: string, themeData: Partial<Theme>): Promise<Theme> {
-  const res = await fetch(`${getBaseUrl()}/api/admin/themes?id=${id}`, {
+  const res = await fetch(getApiUrl(`/api/admin/themes?id=${id}`), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -53,7 +58,7 @@ export async function updateTheme(id: string, themeData: Partial<Theme>): Promis
 }
 
 export async function deleteTheme(id: string): Promise<void> {
-  const res = await fetch(`${getBaseUrl()}/api/admin/themes?id=${id}`, {
+  const res = await fetch(getApiUrl(`/api/admin/themes?id=${id}`), {
     method: 'DELETE',
   })
 
