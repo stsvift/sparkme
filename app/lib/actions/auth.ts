@@ -1,53 +1,34 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
-import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 export async function getSession() {
-  const supabase = createServerActionClient({ cookies })
-  try {
-    const { data: { session }, error } = await supabase.auth.getSession()
-    if (error) throw error
-    return session
-  } catch (error) {
-    console.error('GetSession error:', error)
-    return null
-  }
+  const cookieStore = cookies()
+  const session = cookieStore.get('admin-session')
+  return session?.value === 'true'
 }
 
 export async function signIn(email: string, password: string) {
-  const supabase = createServerActionClient({ cookies })
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
-  
-  if (error) throw error
-  
-  revalidatePath('/')
-}
-
-export async function signUp(email: string, password: string) {
-  const supabase = createServerActionClient({ cookies })
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
-    },
-  })
-  
-  if (error) throw error
-  
-  revalidatePath('/')
+  // For demo purposes - replace with your actual auth logic
+  if (email === 'admin@example.com' && password === 'admin') {
+    cookies().set('admin-session', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+    })
+    return true
+  }
+  throw new Error('Invalid credentials')
 }
 
 export async function signOut() {
-  const supabase = createServerActionClient({ cookies })
-  const { error } = await supabase.auth.signOut()
-  
-  if (error) throw error
-  
-  revalidatePath('/')
+  cookies().delete('admin-session')
+  redirect('/admin/login')
+}
+
+// Since we're using simple admin auth, we don't need signUp
+export async function signUp(email: string, password: string) {
+  throw new Error('Registration is not available')
 }
