@@ -3,7 +3,10 @@ import type { Theme } from '@/lib/types'
 
 function getApiUrl(path: string) {
   const baseUrl = getBaseUrl();
-  return baseUrl ? new URL(path, baseUrl).toString() : path;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const fullUrl = `${baseUrl}${normalizedPath}`;
+  console.log('API URL:', { baseUrl, path, fullUrl });
+  return fullUrl;
 }
 
 export async function getThemes(): Promise<Theme[]> {
