@@ -24,6 +24,7 @@ export function ThemeManager() {
   const [emoji, setEmoji] = useState("💡")
   const [description, setDescription] = useState("")
   const [gradientClass, setGradientClass] = useState("gradient-1")
+  const [isOpen, setIsOpen] = useState(false) // Add this line
   const { toast } = useToast()
   const { isMobile } = useResponsive() // Replace useMobile() with useResponsive()
 
@@ -53,6 +54,7 @@ export function ThemeManager() {
     setGradientClass("gradient-1")
     setCurrentTheme(null)
     setFormMode(null)
+    setIsOpen(false) // Add this line
   }
 
   // Обновленный обработчик создания темы
@@ -64,6 +66,7 @@ export function ThemeManager() {
     setGradientClass("gradient-1")
     setCurrentTheme(null)
     setFormMode("create") // Устанавливаем режим создания
+    setIsOpen(true) // Add this line
   }
 
   const handleEditTheme = (theme: Theme) => {
@@ -73,6 +76,7 @@ export function ThemeManager() {
     setEmoji(theme.emoji)
     setDescription(theme.description || "")
     setGradientClass(theme.gradient_class || "gradient-1")
+    setIsOpen(true) // Add this line
   }
 
   const handleDeleteTheme = async (id: string) => {

@@ -28,3 +28,6 @@ next-env.d.ts
 
 /components/profile
 /app/profile
+data/themes.json
+data/cards.json
+
