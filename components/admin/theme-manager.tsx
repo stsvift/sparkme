@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import type { Theme } from "@/lib/types"
-import { getThemes, createTheme, updateTheme, deleteTheme } from '@/lib/supabase/themes'
+import { getThemes, createTheme, updateTheme, deleteTheme } from '@/lib/api/themes'
 import { EmojiPicker } from "@/components/admin/emoji-picker"
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { useResponsive } from "@/hooks/use-responsive" // Replace useMobile with useResponsive
@@ -125,16 +125,18 @@ export function ThemeManager() {
       console.log('Theme data before save:', themeData)
       let result;
       
-      if (formMode === "create") {
-        result = await createTheme(themeData)
-      } else if (formMode === "edit" && currentTheme) {
-        result = await updateTheme(currentTheme.id, themeData)
+      try {
+        if (formMode === "create") {
+          result = await createTheme(themeData)
+        } else if (formMode === "edit" && currentTheme) {
+          result = await updateTheme(currentTheme.id, themeData)
+        }
+      } catch (error: any) {
+        throw new Error(error.message || 'Failed to save theme')
       }
 
-      console.log('Response from server:', result)
-
       if (!result) {
-        throw new Error('Failed to save theme')
+        throw new Error('No result returned from server')
       }
 
       if (formMode === "create") {

@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Theme {
+  id            String   @id @default(uuid())
+  name          String
+  emoji         String
+  description   String?
+  gradient_class String
+  created_at    DateTime @default(now())
+  cards         Card[]
+
+  @@map("themes")
+}
+
+model Card {
+  id         String   @id @default(uuid())
+  question   String
+  hint       String
+  theme_id   String
+  used       Boolean  @default(false)
+  created_at DateTime @default(now())
+  theme      Theme    @relation(fields: [theme_id], references: [id], onDelete: Cascade)
+
+  @@map("cards")
+}

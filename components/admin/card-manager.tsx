@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast"
 import type { Card as CardType, Theme } from "@/lib/types"
 import { getCards, createCard, updateCard, deleteCard } from '@/app/lib/actions/cards'
-import { getThemes } from "@/app/lib/supabase/themes"
+import { getThemes } from "@/lib/api/themes"
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 

@@ -1,38 +1,14 @@
 'use client'
 
-import { createClientSupabaseClient, type TypedSupabaseClient } from '@/app/lib/supabase/client'
-import { useRouter } from 'next/navigation'
-import { createContext, useContext, useEffect } from 'react'
+import { ReactNode } from 'react'
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from '@/components/ui/toaster'
 
-const Context = createContext<{ supabase: TypedSupabaseClient } | null>(null)
-
-export default function SupabaseProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const supabase = createClientSupabaseClient()
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      router.refresh()
-    })
-
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [router, supabase])
-
+export function Providers({ children }: { children: ReactNode }) {
   return (
-    <Context.Provider value={{ supabase }}>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       {children}
-    </Context.Provider>
+      <Toaster />
+    </ThemeProvider>
   )
-}
-
-export const useSupabase = () => {
-  const context = useContext(Context)
-  if (context === undefined) {
-    throw new Error('useSupabase must be used inside SupabaseProvider')
-  }
-  return context
 }

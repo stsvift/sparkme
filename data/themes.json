@@ -1,11 +1,3 @@
 {
-  "themes": [
-    {
-      "id": "1741206186876",
-      "name": "Отношения",
-      "emoji": "❤️",
-      "description": "Вопросы для тебя и твоего партнера",
-      "gradient_class": "gradient-1"
-    }
-  ]
+  "themes": []
 }

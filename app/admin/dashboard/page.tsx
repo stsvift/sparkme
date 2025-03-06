@@ -80,8 +80,8 @@ export default function AdminDashboardPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <PageHeader
-        title="Панель администратора"
-        description="Управляйте темами и карточками для вашего приложения sparkme!"
+        title="sparkme! Админ"
+        description="Управляйте темами и карточками"
         backLink="/"
         backLinkText="Назад на главную"
       />

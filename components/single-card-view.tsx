@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Check, ChevronLeft, ChevronRight, Undo2, Shuffle, Download } from "lucide-react" // Add Shuffle icon
+import { Check, ChevronLeft, ChevronRight, Undo2, Shuffle, Download } from "lucide-react"
 import type { Card as CardType } from "@/lib/types"
-import { getCardsByTheme, markCardUsed, markCardUnused } from "@/app/lib/supabase/cards"
+import { getCardsByTheme } from "@/app/lib/actions/cards" // Update this import
+import { markCardUsed, markCardUnused } from "@/app/lib/supabase/cards"
 import { useToast } from "@/components/ui/use-toast"
 import html2canvas from 'html2canvas'
 
@@ -117,31 +118,31 @@ export function SingleCardView({ themeId }: SingleCardViewProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 px-4 sm:px-6">
-      <div className={`card-flip ${isFlipped ? "flipped" : ""} w-full max-w-4xl h-[400px] sm:h-[500px]`}>
+      <div className={`card-flip ${isFlipped ? "flipped" : ""} w-full max-w-4xl h-[600px] sm:h-[500px]`}>
         <div className="card-flip-inner relative h-full" ref={cardRef}>
           <Card
-            className={`card-flip-front p-6 sm:p-8 h-full bg-gradient-to-br from-purple-500 to-pink-500`}
+            className={`card-flip-front p-8 sm:p-8 h-full bg-gradient-to-br from-purple-500 to-pink-500`}
             onClick={handleFlip}
           >
             <div className="h-full flex flex-col text-white">
-              <div className="pixel-text text-sm sm:text-base tracking-wider mb-2 sm:mb-4">sparkme!</div>
+              <div className="pixel-text text-base sm:text-base tracking-wider mb-4 sm:mb-4">sparkme!</div>
               <div className="flex-1 flex items-center justify-center">
-                <div className="text-xl sm:text-2xl font-medium text-center">{currentCard.question}</div>
+                <div className="text-2xl sm:text-2xl font-medium text-center leading-relaxed">{currentCard.question}</div>
               </div>
-              <div className="text-xs sm:text-sm opacity-75 text-center mt-2 sm:mt-4">Нажмите, чтобы увидеть подсказку</div>
+              <div className="text-sm sm:text-sm opacity-75 text-center mt-4 sm:mt-4">Нажмите, чтобы увидеть подсказку</div>
             </div>
           </Card>
           <Card 
-            className="card-flip-back p-6 sm:p-8 h-full bg-gradient-to-br from-pink-500 to-purple-500"
+            className="card-flip-back p-8 sm:p-8 h-full bg-gradient-to-br from-pink-500 to-purple-500"
             onClick={handleFlip}
           >
             <div className="h-full flex flex-col text-white">
-              <div className="pixel-text text-xs sm:text-sm mb-2 sm:mb-4">sparkme!</div>
-              <div className="text-xs sm:text-sm opacity-75 text-center">Подсказка</div>
+              <div className="pixel-text text-base sm:text-sm mb-4 sm:mb-4">sparkme!</div>
+              <div className="text-sm sm:text-sm opacity-75 text-center">Подсказка</div>
               <div className="flex-1 flex items-center justify-center">
-                <div className="text-lg sm:text-xl font-medium text-center">{currentCard.hint}</div>
+                <div className="text-xl sm:text-xl font-medium text-center leading-relaxed">{currentCard.hint}</div>
               </div>
-              <div className="text-xs sm:text-sm opacity-75 text-center mt-2 sm:mt-4">Нажмите, чтобы вернуться</div>
+              <div className="text-sm sm:text-sm opacity-75 text-center mt-4 sm:mt-4">Нажмите, чтобы вернуться</div>
             </div>
           </Card>
         </div>
